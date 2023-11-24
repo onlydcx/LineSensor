@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "line/line.cpp"
+#include "stdio.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -36,7 +36,11 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
+#ifdef __GNUC__
+	#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#else
+	#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+#endif /*__GNUC__*/
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -71,7 +75,7 @@ static void MX_USART6_UART_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-  uint16_t analog[2];
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -96,10 +100,12 @@ int main(void)
   MX_ADC1_Init();
   MX_USART6_UART_Init();
   /* USER CODE BEGIN 2 */
-  char buf[1];
+  uint16_t analog[2];
+
   if (HAL_ADC_Start_DMA(&hadc1, (uint32_t *) analog, 2) != HAL_OK){
-           Error_Handler();
+	   Error_Handler();
   }
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -107,8 +113,9 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-    app_main();
+    printf("Hello\n");
     /* USER CODE BEGIN 3 */
+
   }
   /* USER CODE END 3 */
 }
